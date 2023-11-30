@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".ProfileActivity">
+
+    <!-- Customer Image -->
+    <ImageView
+        android:id="@+id/ivCustImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pikeslogo"/>
+
+    <!-- First Name -->
+    <TextView
+        android:id="@+id/tvFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivCustImage"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"
+        android:text="First Name"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/FirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivCustImage"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Last Name -->
+    <TextView
+        android:id="@+id/tvLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFirstName"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="Last Name"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/LastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFirstName"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Age -->
+    <TextView
+        android:id="@+id/tvAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLastName"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="Age"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/Age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLastName"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Sex -->
+    <TextView
+        android:id="@+id/tvSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAge"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="Sex"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/Sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAge"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Address -->
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSex"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="Address"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/Address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSex"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Contact -->
+    <TextView
+        android:id="@+id/tvContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAddress"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="Contact"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/Contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAddress"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- ID Type -->
+    <TextView
+        android:id="@+id/tvIdType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvContact"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:text="ID Type"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/IdType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvContact"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="80dp"
+        android:text=""/>
+
+    <!-- Customer Valid ID -->
+    <ImageView
+        android:id="@+id/ivCustValidId"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/tvIdType"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="55dp"
+        android:src="@drawable/pikeslogo"/>
+
+    <!-- Customer GCash QR -->
+    <ImageView
+        android:id="@+id/ivCustGcashQr"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/tvIdType"
+        android:layout_toEndOf="@id/ivCustValidId"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/pikeslogo"/>
+
+    <TextView
+        android:id="@+id/Orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivCustGcashQr"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="Orders/Requests "
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/Cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Orders"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="My Cart "
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/Deceased"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Cart"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="Deceased "
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/Requestz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Deceased"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="Request "
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Requestz"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="Logout "
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</RelativeLayout>
