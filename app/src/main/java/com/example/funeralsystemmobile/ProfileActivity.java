@@ -1,8 +1,5 @@
 package com.example.funeralsystemmobile;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         Orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                startActivity(new Intent(ProfileActivity.this, OrderActivity.class));
             }
         });
 
@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         Cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                startActivity(new Intent(ProfileActivity.this, CartActivity.class));
             }
         });
 
@@ -168,7 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle error response
-                        Log.e("ProfileActivity", "Error fetching profile: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), "Check Internet Connection ", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
