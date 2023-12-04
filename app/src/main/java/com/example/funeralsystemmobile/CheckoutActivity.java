@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,16 +32,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartActivity extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity {
+
+    private String COName, COAddress, COPhone, COMOP, COPOP;
     private BottomNavigationView bottomNavigationView;
     private List<Product> productList = new ArrayList<>();
-    private CartAdapter adapter;
+    private CheckoutAdapter adapter;
     private Button checkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_checkout);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.nav_profile);
@@ -50,30 +53,31 @@ public class CartActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.nav_products) {
-                    startActivity(new Intent(CartActivity.this, ProductsActivity.class));
+                    startActivity(new Intent(CheckoutActivity.this, ProductsActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_messages) {
-                    startActivity(new Intent(CartActivity.this, MessageActivity.class));
+                    startActivity(new Intent(CheckoutActivity.this, MessageActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_home) {
-                    startActivity(new Intent(CartActivity.this, LandingActivity.class));
+                    startActivity(new Intent(CheckoutActivity.this, LandingActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_notifications) {
-                    startActivity(new Intent(CartActivity.this, NotificationActivity.class));
+                    startActivity(new Intent(CheckoutActivity.this, NotificationActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_profile) {
-                    startActivity(new Intent(CartActivity.this, ProfileActivity.class));
+                    startActivity(new Intent(CheckoutActivity.this, ProfileActivity.class));
                     return true;
                 }
                 return false;
             }
         });
 
+
         Integer custid =  Integer.parseInt(getIdFromSharedPreferences());
         String token = getTokenFromSharedPreferences();
 
         ListView cartListView = findViewById(R.id.cartListView);
-        adapter = new CartAdapter(this, productList);
+        adapter = new CheckoutAdapter(this, productList);
         cartListView.setAdapter(adapter);
 
         String url = ApiConstants.cartListURL + custid;
@@ -108,7 +112,7 @@ public class CartActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle error response
-                        Log.e("CartActivity", "Error fetching profile: " + error.getMessage());
+                        Log.e("CheckoutActivity", "Error fetching profile: " + error.getMessage());
                     }
                 }) {
             @Override
@@ -141,7 +145,7 @@ public class CartActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("CartActivity", "Error parsing JSON response");
+                            Log.e("CheckoutActivity", "Error parsing JSON response");
                         }
                     }
                 },
@@ -166,14 +170,122 @@ public class CartActivity extends AppCompatActivity {
         // Add the request to the Volley request queue
         requestQueuee.add(requestt);
 
+
+        String urlll = ApiConstants.profileURL + custid;
+        JsonObjectRequest requesttt = new JsonObjectRequest(Request.Method.GET, urlll, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Handle the response from the profile endpoint
+                        try {
+                            // Parse and use profile information
+                            String fname = response.getString("fname");
+                            String lname = response.getString("lname");
+                            String address = response.getString("address");
+                            String contact = response.getString("contact");
+
+                            COName = fname + " " + lname;
+                            COAddress = address;
+                            COPhone = contact;
+
+                            // Update your UI with profile information
+                            TextView FullName = findViewById(R.id.FullName);
+                            FullName.setText(fname + " " + lname);
+                            TextView Address = findViewById(R.id.Address);
+                            Address.setText(address);
+                            TextView Phone = findViewById(R.id.Phone);
+                            Phone.setText(contact);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("ProfileActivity", "Error parsing JSON response");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error response
+                        Toast.makeText(getApplicationContext(), "Check Internet Connection ", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public java.util.Map<String, String> getHeaders() {
+                // Add the token to the headers of the request
+                java.util.Map<String, String> headers = new java.util.HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        // Create a request queue using Volley.newRequestQueue
+        RequestQueue requestQueueee = Volley.newRequestQueue(this);
+        // Add the request to the Volley request queue
+        requestQueueee.add(requesttt);
+
+
+        RequestQueue requestQueueeee = Volley.newRequestQueue(this);
         checkoutButton = findViewById(R.id.checkoutButton);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartActivity.this, CheckoutActivity.class));
+                EditText MOP = findViewById(R.id.MOP);
+                EditText POP = findViewById(R.id.POP);
+                COMOP = MOP.getText().toString().trim();
+                COPOP = POP.getText().toString().trim();
+
+                JSONObject requestBody = new JSONObject();
+                try {
+                    requestBody.put("customerID", custid);
+                    requestBody.put("name", COName);
+                    requestBody.put("address", COAddress);
+                    requestBody.put("contact", COPhone);
+                    requestBody.put("modeofpayment", COMOP);
+                    requestBody.put("proofofpayment", COPOP);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String urllll = ApiConstants.checkoutURL;
+                JsonObjectRequest requestttt = new JsonObjectRequest(Request.Method.POST, urllll, requestBody,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    // Assuming the API returns a message upon successful add
+                                    String message = response.getString("message");
+                                    Toast.makeText(getApplicationContext(), "Order Received ", Toast.LENGTH_SHORT).show();
+                                    // For example, start a new activity after successful add
+                                    startActivity(new Intent(CheckoutActivity.this, ProfileActivity.class));
+                                } catch (JSONException e) {
+                                    Toast.makeText(getApplicationContext(), "Check Internet Connection ", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // Handle error response
+                                Log.e("CheckoutActivity", "Error fetching profile: " + error.getMessage());
+                            }
+                        }) {
+                    @Override
+                    public java.util.Map<String, String> getHeaders() {
+                        // Add the token to the headers of the request
+                        java.util.Map<String, String> headers = new java.util.HashMap<>();
+                        headers.put("Authorization", "Bearer " + token);
+                        return headers;
+                    }
+                };
+                // Create a request queue using Volley.newRequestQueue
+
+                // Add the request to the Volley request queue
+                requestQueueeee.add(requestttt);
+
             }
         });
-
     }
 
     private String getIdFromSharedPreferences() {
@@ -186,4 +298,5 @@ public class CartActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         return sharedPreferences.getString("token", "");
     }
+
 }
